@@ -28,14 +28,11 @@ public class User {
 
     private String email;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "User_Subscription", foreignKey = @ForeignKey(name = "user_id"),
-            inverseForeignKey = @ForeignKey(name = "subscription_id"),
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "subscription_id")
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
     @EqualsAndHashCode.Exclude
     @Setter(AccessLevel.NONE)
@@ -43,12 +40,12 @@ public class User {
 
     public void addSubscription(Subscription subscription) {
         subscriptions.add(subscription);
-        subscription.getUsers().add(this);
+        subscription.setUser(this);
     }
 
     public void removeSubscription(Subscription subscription) {
         subscriptions.remove(subscription);
-        subscription.getUsers().remove(this);
+        subscription.setUser(null);
     }
 
 }
