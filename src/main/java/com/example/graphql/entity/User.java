@@ -23,6 +23,7 @@ public class User {
     @Column(name = "lastname")
     private String lastName;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
     @OneToMany(

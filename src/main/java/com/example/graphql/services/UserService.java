@@ -23,5 +23,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-
+    public User addUser(String firstName, String lastName, int age, String email) {
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setAge(age);
+        user.setEmail(email);
+        return userRepository.save(user);
+    }
 }

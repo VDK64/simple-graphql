@@ -7,6 +7,7 @@ import com.example.graphql.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
@@ -42,6 +43,12 @@ public class MainController {
     @BatchMapping(typeName = "User", field = "subscriptions")
     public Mono<Map<User, Set<Subscription>>> subscriptions(List<User> users) {
         return subscriptionService.getSubscriptionsByUsers(users);
+    }
+
+    @MutationMapping
+    public User addUser(@Argument String firstName, @Argument String lastName,
+                        @Argument int age, @Argument String email) {
+        return userService.addUser(firstName, lastName, age, email);
     }
 
 }
