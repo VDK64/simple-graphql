@@ -2,6 +2,7 @@ package com.example.graphql.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -17,6 +18,7 @@ public class Subscription {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User user;
 
 }

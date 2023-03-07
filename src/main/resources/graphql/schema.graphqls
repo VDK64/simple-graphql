@@ -1,9 +1,18 @@
 type Query {
-    user: User
+    user(id: ID): User
+    users: [User]
 }
 
 type User {
     id: ID!
-    name: String!
     age: Int!
+    firstName: String!
+    lastName: String!
+    email: String!
+    subscriptions: [Subscription]
+}
+
+type Subscription {
+    id: ID!
+    name: String!
 }

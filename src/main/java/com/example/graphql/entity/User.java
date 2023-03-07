@@ -1,9 +1,6 @@
 package com.example.graphql.entity;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,6 +32,7 @@ public class User {
             fetch = FetchType.LAZY
     )
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @Setter(AccessLevel.NONE)
     private List<Subscription> subscriptions = new ArrayList<>();
 
