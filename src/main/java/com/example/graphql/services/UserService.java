@@ -7,11 +7,7 @@ import com.example.graphql.repository.UserRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Component
 public class UserService {
@@ -33,11 +29,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Mono<Map<User, List<Subscription>>> getBatchUser(List<User> users) {
-        Mono<Map<User, List<Subscription>>> just = Mono.just(users.stream()
-                .collect(Collectors.toMap(Function.identity(), subscriptionRepository::findByUser)));
-        System.out.println();
-        return just;
+    public Mono<Map<User, Set<Subscription>>> getBatchUser(List<User> users) {
+        Set<Subscription> subscriptionsByUser = subscriptionRepository.findByUserIn(users);
+        Map<User, Set<Subscription>> result = new HashMap<>();
+        subscriptionsByUser.forEach(subscription -> {
+            if (result.containsKey(subscription.getUser())) {
+                result.get(subscription.getUser()).add(subscription);
+            } else {
+                result.put(subscription.getUser(), new HashSet<>(List.of(subscription)));
+            }
+        });
+        return Mono.just(result);
     }
 
 }
