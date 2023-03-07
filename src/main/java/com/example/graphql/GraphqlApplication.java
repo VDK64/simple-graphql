@@ -3,6 +3,7 @@ package com.example.graphql;
 import com.example.graphql.entity.Subscription;
 import com.example.graphql.entity.User;
 import com.example.graphql.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import net.datafaker.service.FakeValuesService;
 import net.datafaker.service.FakerContext;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Random;
 
 @SpringBootApplication
+@RequiredArgsConstructor
 public class GraphqlApplication implements CommandLineRunner {
 
     private final UserRepository userRepository;
@@ -24,14 +26,6 @@ public class GraphqlApplication implements CommandLineRunner {
     private final FakeValuesService fakeValuesService;
 
     private final FakerContext fakerContext;
-
-    public GraphqlApplication(UserRepository userRepository, Faker faker, Random random, FakeValuesService fakeValuesService, FakerContext fakerContext) {
-        this.userRepository = userRepository;
-        this.faker = faker;
-        this.random = random;
-        this.fakeValuesService = fakeValuesService;
-        this.fakerContext = fakerContext;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(GraphqlApplication.class, args);

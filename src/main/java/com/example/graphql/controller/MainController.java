@@ -2,7 +2,9 @@ package com.example.graphql.controller;
 
 import com.example.graphql.entity.Subscription;
 import com.example.graphql.entity.User;
+import com.example.graphql.services.SubscriptionService;
 import com.example.graphql.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
@@ -14,13 +16,12 @@ import java.util.Map;
 import java.util.Set;
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
 
     private final UserService userService;
 
-    public MainController(UserService userService) {
-        this.userService = userService;
-    }
+    private final SubscriptionService subscriptionService;
 
     /**
      * The same thins with @QueryMapping
@@ -40,7 +41,7 @@ public class MainController {
 
     @BatchMapping(typeName = "User", field = "subscriptions")
     public Mono<Map<User, Set<Subscription>>> subscriptions(List<User> users) {
-        return userService.getBatchUser(users);
+        return subscriptionService.getSubscriptionsByUsers(users);
     }
 
 }
