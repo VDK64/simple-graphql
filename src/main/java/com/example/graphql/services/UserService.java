@@ -1,6 +1,7 @@
 package com.example.graphql.services;
 
 import com.example.graphql.entity.User;
+import com.example.graphql.exceptions.UserNotFoundException;
 import com.example.graphql.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class UserService {
 
     public User getUser(long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
+        return optionalUser.orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     public List<User> getUsers() {
